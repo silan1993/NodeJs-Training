@@ -4,7 +4,7 @@ var app =require('./external/app');
 
 
 function onRequest(req,res){
-	res.writeHead(200,{'Content-Type' :'text/html'});
+	res.writeHead(200,{'Content-Type' :'text/plain'});
 
 	fs.readFile('./index.html',null,function(error,data){
 		if(error == null){
