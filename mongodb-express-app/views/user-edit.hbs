@@ -1,0 +1,11 @@
+<p> Edit Your detail </p>
+
+<form action="/users/user-edit" method="post">
+
+	<input type="hidden" name="userId" value="{{users._id}}">
+
+	<input type="text" name="email" placeholder="email" value={{ users.email}}>
+	<input type="password" name="pwd" placeholder="password" value={{ users.password}}>
+	<input type="text" name="mobile" placeholder="mobile" value={{ users.mobile}}>
+	<button type="submit" value="submit">Update</button>
+</form>
