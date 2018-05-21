@@ -28,6 +28,7 @@ router.get('/new', function(req, res, next) {
  
 });
 
+
 router.get('/:id/edit', function(req, res, next) {
 	var id = req.params.id;
 	mongoClient.connect(url,function(err,db){

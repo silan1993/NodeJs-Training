@@ -10,7 +10,6 @@ router.get('/', function(req, res, next) {
 		var usersData = [];
 
 		var userData = db.collection('user').find();
-		console.log(userData);
 		userData.forEach(function(doc){
 			usersData.push(doc);
 		},function(){
@@ -58,11 +57,21 @@ router.post('/user-create', function(req, res, next) {
 	};
 	mongoClient.connect(url,function(err,db){
 		if (err) throw err;
-		db.collection('user').insertOne(newUser,function(error,data){
-			res.redirect('/users');
+		var usersData =[];
+		var userData = db.collection('user').find({mobile:req.body.mobile});
+		userData.forEach(function(doc){
+			usersData.push(doc);
+		},function(){
+			if(usersData.length >0){
+				res.render('error',{message:'This mobile number is already registered'});
+			}else{
+				db.collection('user').insertOne(newUser,function(error,data){
+					db.close();
+					res.redirect('/users');
+				})
+			}
 		})
 	})
- 
 });
 
 
