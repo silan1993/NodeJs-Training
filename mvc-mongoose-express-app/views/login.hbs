@@ -1,0 +1,21 @@
+
+<div style="text-align: center; margin-top: 140px;">
+	{{#if isUser}}
+	<p style="color: green">{{message}}</p>
+	{{else}}
+	<p style="color: red">{{message}}</p>
+	{{/if}}
+
+	<form style="background-color: blue;height: 160px;width: 204px; text-align: center;margin-left: 280px;" action="/login" method="post">
+		<div style="padding-top: 30px;">Mobile: 
+			<input type="text" name="mobile">
+		</div>
+		<br>
+		<div>Password: 
+			<input type="password" name="password">
+		</div>
+		<div>
+		<button type="submit">Login</button>
+		</div>
+	</form>
+</div>

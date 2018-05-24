@@ -1,0 +1,43 @@
+<h1>Users List</h1>
+<a href="/users/new"><button style="background-color: blue;color: white;text-align: right;height: 30px;" >Add User</button></a>
+<hr>
+
+<table border="1px;" style="width: 100%">
+	<tr>
+		<th>
+			ID
+		</th>
+		<th>
+			Email
+		</th>
+		<th>
+			Mobile
+		</th>
+		<th>
+			Password
+		</th>
+		<th>
+			Action
+		</th>
+	</tr>
+	{{# each users}}
+	<tr>
+		<td>
+			{{this._id}}
+		</td>
+		<td>
+			{{this.email}}
+		</td>
+		<td>
+			{{this.mobile}}
+		</td>
+		<td>
+		{{this.password}}
+		</td>
+		<td>
+		<a href="/users/{{this._id}}/edit"><button style="color: blue">Update</button></a>
+		<a href="/users/{{this._id}}/delete"><button style="color: blue">Delete</button></a>
+		</td>
+	</tr>
+	{{/each }}
+</table>
