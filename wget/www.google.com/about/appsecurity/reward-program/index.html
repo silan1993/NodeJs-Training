@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html class="google mmfb" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="//www.gstatic.com/safen-me-up.js"></script>
+    <script>
+    if (window.safenup_status !== 'ok') { document.write('<PLAINTEXT>'); }
+    </script>
+    <script>
+    (function(H){H.className=H.className.replace(/\bgoogle\b/,'google-js')})(document.documentElement)
+    </script>
+    <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
+    <title>
+      Program Rules – Application Security – Google
+    </title>
+    <script src="//www.google.com/js/google.js"></script>
+    <script>
+    new gweb.analytics.AutoTrack({profile:"UA-51571019-1"});
+    </script>
+    <link href=
+    "//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Product+Sans:400&amp;lang=en" rel=
+    "stylesheet">
+    <link href="/about/appsecurity/css/default.css" rel="stylesheet">
+    <style type="text/css">
+    span.c2 {text-decoration: underline}
+    td.c1 {margin: auto; text-align: center;}
+    </style>
+  </head>
+  <body>
+    <div class="maia-header" id="maia-header" role="banner">
+      <div class="maia-aux">
+        <h1>
+          <a href="/"><img alt="Google" src=
+          "//www.google.com/images/branding/googlelogo/1x/googlelogo_color_116x41dp.png" srcset=
+          "//www.google.com/images/branding/googlelogo/2x/googlelogo_color_116x41dp.png 2x"></a>
+        </h1>
+        <h2>
+          <a href="/about/appsecurity/">&nbsp;Application Security</a>
+        </h2><a class="maia-teleport" href="#content">Skip to content</a>
+        <div class="maia-util">
+          <div class="maia-plusone">
+            <span class="plusone-button" id="plusone-"></span> 
+            <script>
+            window.___gcfg = {
+      lang: 'en',
+      parsetags: 'explicit'
+    };
+
+    var gweb = gweb || {};  // namespace
+    gweb.plusOneButton = {};
+    gweb.plusOneButton.callbacks = {};
+    gweb.plusOneButton.onPlusOneLoad = function() {
+      for (var slug in gweb.plusOneButton.callbacks) {
+        gapi.plusone.render(slug, gweb.plusOneButton.callbacks[slug]);
+      }
+      gweb.plusOneButton.callbacks = {};
+    };
+            </script> 
+            <script src="//apis.google.com/js/platform.js"></script> 
+            <script>
+            gweb.plusOneButton.callbacks['plusone-'] = {
+      'annotation': 'none',
+      'href': location.protocol + '//' + document.domain + location.pathname,
+      'size': 'standard',
+      'callback': '',
+      'recommendations': 'true'
+  };
+  gweb.plusOneButton.onPlusOneLoad();
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="maia-nav maia-complex" id="maia-nav-x" role="navigation">
+      <div class="maia-aux">
+        <ul>
+          <li>
+            <a href="../../../about/appsecurity/">Home</a>
+          </li>
+          <li>
+            <a href="../../../about/appsecurity/learning/xss/">Learning</a>
+          </li>
+          <li class="active">
+            <a href="../../../about/appsecurity/programs-home/">Reward Programs</a>
+            <ul>
+              <li>Google VRP
+              </li>
+              <li>
+                <a href="../../../about/appsecurity/patch-rewards/">Patch Rewards</a>
+              </li>
+              <li>
+                <a href="../../../about/appsecurity/patch-rewards/autofuzz/">AutoFuzz Patch
+                Rewards</a>
+              </li>
+              <li>
+                <a href="../../../about/appsecurity/research-grants/">Research Grants</a>
+              </li>
+              <li>
+                <a href="../../../about/appsecurity/chrome-rewards/">Chrome Rewards</a>
+              </li>
+              <li>
+                <a href="../../../about/appsecurity/android-rewards/">Android Rewards</a>
+              </li>
+              <li>
+                <a href="../../../about/appsecurity/play-rewards/">Google Play Rewards</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="../../../about/appsecurity/hall-of-fame/">Hall of Fame</a>
+          </li>
+          <li>
+            <a href="../../../about/appsecurity/research/">Research</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="maia-main" role="main">
+      <div class="maia-teleport" id="content"></div>
+      <h1>
+        Google Vulnerability Reward Program (VRP) Rules
+      </h1>
+      <p>
+        We have long enjoyed a close relationship with the security research community. To honor
+        all the cutting-edge external contributions that help us keep our users safe, we maintain a
+        Vulnerability Reward Program for Google-owned web properties, running continuously since
+        November 2010.
+      </p>
+      <h2 id="scope">
+        Services in scope
+      </h2>
+      <p>
+        In principle, any Google-owned web service that handles reasonably sensitive user data is
+        intended to be in scope. This includes virtually all the content in the following domains:
+      </p>
+      <ul>
+        <li>*.google.com
+        </li>
+        <li>*.youtube.com
+        </li>
+        <li>*.blogger.com
+        </li>
+      </ul>
+      <p>
+        Bugs in <a href="https://cloud.google.com/">Google Cloud Platform</a>, Google-developed
+        apps and extensions (published in <a href=
+        "https://play.google.com/store/apps/developer?id=Google+LLC">Google Play</a>, in <a href=
+        "https://itunes.apple.com/developer/google-inc/id281956209?mt=8">iTunes</a>, or in the
+        <a href="https://chrome.google.com/webstore/category/ext/15-by-google">Chrome Web
+        Store</a>), as well as some of our hardware devices (<a href=
+        "https://madeby.google.com/home/">Home</a>, <a href="https://on.google.com/hub/">OnHub</a>
+        and <a href="https://nest.com/">Nest</a>) will also qualify. See our <a href=
+        "../android-rewards/">Android Rewards</a> and <a href="../chrome-rewards/">Chrome
+        Rewards</a> for other services and devices that are also in scope.
+      </p>
+      <p>
+        On the flip side, the program has two important exclusions to keep in mind:
+      </p>
+      <ul>
+        <li>
+          <b>Third-party websites.</b> Some Google-branded services hosted in less common domains
+          may be operated by our vendors or partners (this notably includes <q>zagat.com</q>). We
+          can’t authorize you to test these systems on behalf of their owners and will not reward
+          such reports. Please read the fine print on the page and examine domain and IP WHOIS
+          records to confirm. If in doubt, talk to us first!
+        </li>
+        <li>
+          <b>Recent acquisitions.</b> To allow time for internal review and remediation, newly
+          acquired companies are subject to a six-month blackout period. Bugs reported sooner than
+          that will typically not qualify for a reward.
+        </li>
+      </ul>
+      <h2 id="vulns">
+        Qualifying vulnerabilities
+      </h2>
+      <p>
+        Any design or implementation issue that substantially affects the confidentiality or
+        integrity of user data is likely to be in scope for the program. Common examples include:
+      </p>
+      <ul>
+        <li>Cross-site scripting,
+        </li>
+        <li>Cross-site request forgery,
+        </li>
+        <li>Mixed-content scripts,
+        </li>
+        <li>Authentication or authorization flaws,
+        </li>
+        <li>Server-side code execution bugs.
+        </li>
+      </ul>
+      <p>
+        Note that the scope of the program is limited to technical vulnerabilities in Google-owned
+        browser extensions, mobile, and web applications; please do not try to sneak into Google
+        offices, attempt phishing attacks against our employees, and so on.
+      </p>
+      <p>
+        Out of concern for the availability of our services to all users, please do not attempt to
+        carry out DoS attacks, leverage black hat SEO techniques, spam people, or do other
+        similarly questionable things. We also discourage the use of any vulnerability testing
+        tools that automatically generate very significant volumes of traffic.
+      </p>
+      <h2 id="notavuln">
+        Non-qualifying vulnerabilities
+      </h2>
+      <div class="maia-promo">
+        <strong>New!</strong> Visit our <a href=
+        "https://sites.google.com/site/bughunteruniversity/nonvuln" target="_blank">Bug Hunter
+        University</a> page dedicated to common non-qualifying findings and vulnerabilities.
+      </div>
+      <p>
+        Depending on their impact, some of the reported issues may not qualify. Although we review
+        them on a case-by-case basis, here are some of the common low-risk issues that typically do
+        not earn a monetary reward:
+      </p>
+      <ul>
+        <li>
+          <strong>Vulnerabilities in *.bc.googleusercontent.com or *.appspot.com.</strong> These
+          domains are used to host applications that belong to Google Cloud customers. The
+          Vulnerability Reward Program does not authorize the testing of Google Cloud customer
+          applications. Google Cloud customers can authorize the penetration testing of their own
+          applications (<em><a href="https://cloud.google.com/security/" target="_blank">read
+          more</a></em>), but testing of these domains is not within the scope of or authorized by
+          the Vulnerability Reward Program.
+        </li>
+        <li>
+          <strong>Cross-site scripting vulnerabilities in “sandbox” domains</strong> (<em><a href=
+          "https://sites.google.com/site/bughunteruniversity/nonvuln/xss-in-sandbox-domain" target=
+          "_blank">read more</a></em>.) We maintain a number of domains that leverage the <a href=
+          "http://code.google.com/p/browsersec/wiki/Main/Part2#Same-origin_policy">same-origin
+          policy</a> to safely isolate certain types of untrusted content; the most prominent
+          example of this is <q>*.googleusercontent.com</q>. Unless an impact on sensitive user
+          data can be demonstrated, we do not consider the ability to execute JavaScript in that
+          domain to be a bug.
+        </li>
+        <li>
+          <strong>Execution of owner-supplied JavaScript in Blogger.</strong> Blogs hosted in
+          <q>*.blogspot.com</q> are no different from any third-party website on the Internet. For
+          your safety, we employ spam and malware detection tools, but we do not consider the
+          ability to embed JavaScript within your own blog to be a security bug.
+        </li>
+        <li>
+          <strong>URL redirection</strong> (<em><a href=
+          "https://sites.google.com/site/bughunteruniversity/nonvuln/open-redirect" target=
+          "_blank">read more</a></em>.) We recognize that the address bar is the only reliable
+          security indicator in modern browsers; consequently, we hold that the usability and
+          security benefits of a small number of well-designed and closely monitored redirectors
+          outweigh their true risks.
+        </li>
+        <li>
+          <strong>Legitimate content proxying and framing.</strong> We expect our services to
+          unambiguously label third-party content and to perform a number of abuse-detection
+          checks, but as with redirectors, we think that the value of products such as Google
+          Translate outweighs the risk.
+        </li>
+        <li>
+          <strong>Bugs requiring exceedingly unlikely user interaction.</strong> For example, a
+          cross-site scripting flaw that requires the victim to manually type in an XSS payload
+          into Google Maps and then double-click an error message may realistically not meet the
+          bar.
+        </li>
+        <li>
+          <strong>Logout cross-site request forgery</strong> (<em><a href=
+          "https://sites.google.com/site/bughunteruniversity/nonvuln/logout-xsrf" target=
+          "_blank">read more</a></em>.) For better or worse, the design of HTTP cookies means that
+          no single website can prevent its users from being logged out; consequently,
+          application-specific ways of achieving this goal will likely not qualify. You may be
+          interested in personal blog posts from <a href=
+          "http://scarybeastsecurity.blogspot.com/2010/01/logout-xsrf-significant-web-app-bug.html">
+          Chris Evans</a> and <a href=
+          "http://lcamtuf.blogspot.com/2010/10/http-cookies-or-how-not-to-design.html">Michal
+          Zalewski</a> for more background.
+        </li>
+        <li>
+          <strong>Flaws affecting the users of out-of-date browsers and plugins.</strong> The
+          security model of the web is being constantly fine-tuned. The panel will typically not
+          reward any problems that affect only the users of outdated or unpatched browsers. In
+          particular, we exclude Internet Explorer prior to version 9.
+        </li>
+        <li>
+          <strong>Presence of banner or version information.</strong> Version information does not,
+          by itself, expose the service to attacks - so we do not consider this to be a bug. That
+          said, if you find outdated software and have good reasons to suspect that it poses a
+          well-defined security risk, please let us know.
+        </li>
+      </ul>
+      <p>
+        Monetary rewards aside, vulnerability reporters who work with us to resolve security bugs
+        in our products will be credited on the <a href="../hall-of-fame/">Hall of Fame</a>. If we
+        file an internal security bug, we will acknowledge your contribution on that page.
+      </p>
+      <h2 id="rewards">
+        Reward amounts
+      </h2>
+      <div class="maia-promo">
+        <strong>New!</strong> To read more about our approach to vulnerability rewards you can read
+        our Bug Hunter University article <a href=
+        "https://sites.google.com/site/bughunteruniversity/behind-the-scenes/rewards-philosophy">here</a>.
+      </div>
+      <p>
+        Rewards for qualifying bugs range from $100 to $31,337. The following table outlines the
+        usual rewards chosen for the most common classes of bugs:
+      </p>
+      <table>
+        <tr>
+          <th>
+            Category
+          </th>
+          <th>
+            Examples
+          </th>
+          <th>
+            Applications that permit taking over a Google account [1]
+          </th>
+          <th>
+            Other highly sensitive applications [2]
+          </th>
+          <th>
+            Normal Google applications
+          </th>
+          <th>
+            Non-integrated acquisitions and other sandboxed or lower priority applications [3]
+          </th>
+        </tr>
+        <tr>
+          <td class="c1" colspan="6">
+            Vulnerabilities giving direct access to Google servers
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Remote code execution
+          </td>
+          <td>
+            <q>Command injection, deserialization bugs, sandbox escapes</q>
+          </td>
+          <td>
+            $31,337
+          </td>
+          <td>
+            $31,337
+          </td>
+          <td>
+            $31,337
+          </td>
+          <td>
+            $1,337 - $5,000
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Unrestricted file system or database access
+          </td>
+          <td>
+            <q>Unsandboxed XXE, SQL injection</q>
+          </td>
+          <td>
+            $13,337
+          </td>
+          <td>
+            $13,337
+          </td>
+          <td>
+            $13,337
+          </td>
+          <td>
+            $1,337 - $5,000
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Logic flaw bugs leaking or bypassing significant security controls
+          </td>
+          <td>
+            <q>Direct object reference, remote user impersonation</q>
+          </td>
+          <td>
+            $13,337
+          </td>
+          <td>
+            $7,500
+          </td>
+          <td>
+            $5,000
+          </td>
+          <td>
+            $500
+          </td>
+        </tr>
+        <tr>
+          <td class="c1" colspan="6">
+            Vulnerabilities giving access to client or authenticated session of the logged-in
+            victim
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Execute code on the client
+          </td>
+          <td>
+            <span class="c2">Web</span>: <q>Cross-site scripting</q><br>
+            <span class="c2">Mobile / Hardware</span>: <q>Code execution</q>
+          </td>
+          <td>
+            $7,500
+          </td>
+          <td>
+            $5,000
+          </td>
+          <td>
+            $3,133.7
+          </td>
+          <td>
+            $100
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Other valid security vulnerabilities
+          </td>
+          <td>
+            <span class="c2">Web</span>: <q>CSRF, Clickjacking</q><br>
+            <span class="c2">Mobile / Hardware</span>: <q>Information leak, privilege
+            escalation</q>
+          </td>
+          <td>
+            $500 - $7,500
+          </td>
+          <td>
+            $500 - $5,000
+          </td>
+          <td>
+            $500 - $3,133.7
+          </td>
+          <td>
+            $100
+          </td>
+        </tr>
+      </table>
+      <p>
+        <q>[1] For example, for web properties this includes some vulnerabilities in Google
+        Accounts (https://accounts.google.com).</q>
+      </p>
+      <p>
+        <q>[2] This category includes products such as Google Search (https://www.google.com and
+        https://encrypted.google.com), Google Wallet (https://wallet.google.com), Google Mail
+        (https://mail.google.com), Google Inbox (https://inbox.google.com), Google Code Hosting
+        (https://code.google.com), Chromium Bug Tracker (https://bugs.chromium.org), Chrome Web
+        Store (https://chrome.google.com), Google App Engine (https://appengine.google.com), Google
+        Admin (https://admin.google.com), Google Developers Console
+        (https://console.developers.google.com), and Google Play (https://play.google.com).</q>
+      </p>
+      <p>
+        <q>[3] Note that acquisitions qualify for a reward only after the initial six-month
+        blackout period has elapsed.</q>
+      </p>
+      <p>
+        The final amount is always chosen at the discretion of the reward panel. In particular, we
+        may decide to pay higher rewards for unusually clever or severe vulnerabilities; decide to
+        pay lower rewards for vulnerabilities that require unusual user interaction; decide that a
+        single report actually constitutes multiple bugs; or that multiple reports are so closely
+        related that they only warrant a single reward.
+      </p>
+      <p>
+        We understand that some of you are not interested in money. We offer the option to donate
+        your reward to an established charity. If you do so, we will double your donation - subject
+        to our discretion. Any rewards that are unclaimed after 12 months will be donated to a
+        charity of our choosing.
+      </p>
+      <h2 id="reporting">
+        Investigating and reporting bugs
+      </h2>
+      <p>
+        When investigating a vulnerability, please, only ever target your own accounts. Never
+        attempt to access anyone else's data and do not engage in any activity that would be
+        disruptive or damaging to your fellow users or to Google.
+      </p>
+      <div class="maia-promo">
+        <strong>New!</strong> Visit our <a href=
+        "https://sites.google.com/site/bughunteruniversity/improve">Bug Hunter University</a>
+        articles to learn more about sending good vulnerability reports.
+      </div>
+      <p>
+        If you have found a vulnerability, please contact us at <a href=
+        "https://goo.gl/vulnz">goo.gl/vulnz</a>. <b>Please be succinct</b>: the contact form is
+        attended by security engineers and a short proof-of-concept link is more valuable than a
+        video explaining the consequences of an XSS bug. If necessary, you can use this <a href=
+        "https://services.google.com/corporate/publickey.txt">PGP key</a>.
+      </p>
+      <p>
+        Note that we are only able to answer to technical vulnerability reports. Non-security bugs
+        and queries about problems with your account should be instead directed to <a href=
+        "http://support.google.com/">Google Help Centers</a>.
+      </p>
+      <h2 id="faq">
+        Frequently asked questions
+      </h2>
+      <p>
+        <em>Q: What if I found a vulnerability, but I don't know how to exploit it?</em>
+      </p>
+      <p>
+        A: We expect that vulnerability reports sent to us have a valid <a href=
+        "https://sites.google.com/site/bughunteruniversity/improve/writing-the-perfect-attack-scenario"
+        target="_blank">attack scenario</a> to qualify for a reward, and we consider it as a
+        <a href="http://lcamtuf.blogspot.com/2014/11/exploitation-scenarios-matter-more-than.html"
+        target="_blank">critical step</a> when doing vulnerability research. Reward amounts are
+        decided based on the maximum impact of the vulnerability, and the panel is willing to
+        reconsider a reward amount, based on new information (such as a chain of bugs, or a revised
+        attack scenario).
+      </p>
+      <p>
+        <em>Q: How do I demonstrate the severity of the bug if I’m not supposed to snoop
+        around?</em>
+      </p>
+      <p>
+        A: Please submit your report as soon as you have discovered a potential security issue. The
+        panel will consider the maximum impact and will choose the reward accordingly. We routinely
+        pay higher rewards for otherwise well-written and useful submissions where the reporter
+        didn't notice or couldn't fully analyze the impact of a particular flaw.
+      </p>
+      <p>
+        <em>Q: I found an outdated software (e.g. Apache or Wordpress). Does this qualify for a
+        reward?</em>
+      </p>
+      <p>
+        A: Please perform due diligence: confirm that the discovered software had any noteworthy
+        vulnerabilities, and explain why you suspect that these features may be exposed and may
+        pose a risk in our specific use. Reports that do not include this information will
+        typically not qualify.
+      </p>
+      <p>
+        <em>Q: Who determines whether my report is eligible for a reward?</em>
+      </p>
+      <p>
+        A: The reward panel consists of the members of the Google Security Team. The current
+        permanent members are Daniel Stelter-Gliese, Eduardo Vela Nava, Gábor Molnár, Krzysztof
+        Kotowicz, Martin Straka, and Michael Jezierny. In addition there is a rotating member from
+        <a href="https://plus.google.com/communities/103663928590757646624/members/moderator">the
+        rest of our team</a>.
+      </p>
+      <p>
+        <em>Q: What happens if I disclose the bug publicly before you had a chance to fix it?</em>
+      </p>
+      <p>
+        A: Please read our stance on <a href=
+        "http://googleonlinesecurity.blogspot.com/2010/07/rebooting-responsible-disclosure-focus.html">
+        coordinated disclosure</a>. In essence, our pledge to you is to respond promptly and fix
+        bugs in a sensible timeframe - and in exchange, we ask for a reasonable advance notice.
+        Reports that go against this principle will usually not qualify, but we will evaluate them
+        on a case-by-case basis.
+      </p>
+      <p>
+        <em>Q: I wish to report an issue through a vulnerability broker. Will my report still
+        qualify for a reward?</em>
+      </p>
+      <p>
+        A: We believe that it is against the spirit of the program to privately disclose the flaw
+        to third parties for purposes other than actually fixing the bug. Consequently, such
+        reports will typically not qualify.
+      </p>
+      <p>
+        <em>Q: What if somebody else also found the same bug?</em>
+      </p>
+      <p>
+        A: First in, best dressed. You will qualify for a reward only if you were the first person
+        to alert us to a previously unknown flaw.
+      </p>
+      <p>
+        <em>Q: My employer / boyfriend / dog frowns upon my security research. Can I report a
+        problem privately?</em>
+      </p>
+      <p>
+        A: Sure. If you are selected as a recipient of a reward, and if you accept, we will need
+        your contact details to process the payment. You can still request not to be listed on our
+        public credits page.
+      </p>
+      <p>
+        <em>Q: What is bughunter.withgoogle.com?</em>
+      </p>
+      <p>
+        A: The dashboard for the participants in Google’s VRP program. It dynamically creates the
+        hall of fame, i.e., the 0x0A and honorable mentions lists.
+      </p>
+      <p>
+        <em>Q: Do I need a profile on bughunter.withgoogle.com to participate in the VRP?</em>
+      </p>
+      <p>
+        A: No. You can participate in the VRP under the same rules without the need of a profile.
+        However, if you want your name to be listed in the 0x0A or the honorable mentions lists,
+        you need to create a profile.
+      </p>
+      <p>
+        <em>Q: Is the profile data publicly available?</em>
+      </p>
+      <p>
+        A: Yes. The profile holds the data that is currently already available now on our hall of
+        fame, i.e., on the 0x0A and honorable mentions lists. You can always leave these fields
+        blank.
+      </p>
+      <p>
+        <em>Q: How is the honorable mentions list sorted?</em>
+      </p>
+      <p>
+        A: The hall of fame is sorted based on the volume of valid bug submissions, the ratio of
+        valid vs. invalid submissions, and the severity of those submissions.
+      </p>
+      <h2 id="legal">
+        Legal points
+      </h2>
+      <p>
+        We are unable to issue rewards to individuals who are on sanctions lists, or who are in
+        countries (e.g. Cuba, Iran, North Korea, Sudan and Syria) on sanctions lists. You are
+        responsible for any tax implications depending on your country of residency and
+        citizenship. There may be additional restrictions on your ability to enter depending upon
+        your local law.
+      </p>
+      <p>
+        This is not a competition, but rather an experimental and discretionary rewards program.
+        You should understand that we can cancel the program at any time and the decision as to
+        whether or not to pay a reward has to be entirely at our discretion.
+      </p>
+      <p>
+        Of course, your testing must not violate any law, or disrupt or compromise any data that is
+        not your own.
+      </p>
+    </div>
+    <div id="maia-signature"></div>
+    <div class="maia-footer" id="maia-footer">
+      <div id="maia-footer-global">
+        <div class="maia-aux">
+          <ul>
+            <li>
+              <a href="/">Google</a>
+            </li>
+            <li>
+              <a href="/intl/en/about/">About Google</a>
+            </li>
+            <li>
+              <a href="/intl/en/policies/privacy/">Privacy</a>
+            </li>
+            <li>
+              <a href="/intl/en/policies/terms/">Terms</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="//www.google.com/js/maia.js"></script>
+  </body>
+</html>

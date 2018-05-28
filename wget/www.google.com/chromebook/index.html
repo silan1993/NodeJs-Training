@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en_IN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta content= "The Chromebook is a new, faster computer. It starts in seconds, and offers thousands of apps. It has built-in virus protection, and backs up your stuff in the cloud. With automatic updates, it keeps getting better." name="description">
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://www.google.com/intl/en_in/chromebook/"/>
+<meta property="og:title" content="Google Chromebooks"/>
+<meta property="og:image" content="https://www.google.com/chromebook/static/images/social.jpg"/>
+<meta property="og:site_name" content="Google Chromebooks"/>
+<link href="//www.google.com/images/icons/product/chrome-32.png" rel="icon" type="image/ico">
+<title>Google Chromebooks</title>
+<link rel="stylesheet" href="/chromebook/static/css/main.min.css">
+<script src="//ajax.googleapis.com/ajax/libs/webfont/1.5.10/webfont.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="/chromebook/static/js/main.min.js"></script>
+<script src="//www.google.com/js/gweb/analytics/autotrack.js"></script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-534C4V');</script>
+<script>new gweb.analytics.AutoTrack({ profile: 'UA-26908291-1' });</script>
+<body>
+<!--
+Start of DoubleClick Floodlight Tag: Please do not remove
+Activity name of this tag: Chromebook - NA - Microsite - Homepage
+URL of the webpage where the tag is expected to be placed: https://www.google.com/chromebook/?0
+This tag must be placed between the <body> and </body> tags, as close as possible to the opening tag.
+-->
+<script>
+var axel = Math.random() + "";
+var a = axel * 10000000000000;
+document.write('<iframe src="https://2542116.fls.doubleclick.net/activityi;src=2542116;type=chrom264;cat=chrom00i;ord=' + a + '?" width="1" height="1" frameborder="0" style="display:none"></iframe>');
+</script>
+<noscript>
+<iframe src="https://2542116.fls.doubleclick.net/activityi;src=2542116;type=chrom264;cat=chrom00i;ord=1?" width="1" height="1" frameborder="0" style="display:none"></iframe>
+</noscript>
+<!-- End of DoubleClick Floodlight Tag: Please do not remove -->
+
+<header
+  ng-controller="HeaderController"
+  ng-class="{'header--scrolled': isScrolled}"
+>
+  <div class="header__top">
+      <a href="/intl/en_in/chromebook/" class="header__logo">
+        <img src="/chromebook/static/images/chromebook-logo.png" alt="Chromebook" />
+      </a>
+    <div class="header__burger" ng-click="onMenuClick($event)">
+      <div></div>
+    </div>
+  </div>
+  <div class="header__bottom">
+    <div class="header__sections" ng-mouseleave="onLinksLeave($event)">
+      <div class="header__active-state"></div>
+          <div class="header__link ">
+            <a href="/intl/en_in/chromebook/about/" ng-mouseover="onLinkHover($event)" target="_top">
+              About
+            </a>
+          </div>
+          <div class="header__link ">
+            <a href="/intl/en_in/chromebook/find/" ng-mouseover="onLinkHover($event)" target="_top">
+              Find Yours
+            </a>
+          </div>
+          <div class="header__link ">
+            <a href="/intl/en_in/chromebook/switch/" ng-mouseover="onLinkHover($event)" target="_top">
+              Make the Switch
+            </a>
+          </div>
+      <a href="/intl/en_in/chromebook/find/" class="button--buyNow" target="_top">Buy Now</a>
+    </div>
+  </div>
+</header>
+<div class="header__openOverlay"></div>  <main>
+      <div class="home" ng-controller="VideoController as videoCtrl">
+    <div class="hero" ng-controller="HeroController">
+      <div class="hero__image" fadein></div>
+      <div class="hero__content">
+        <h1>Meet Chromebooks.</h1>
+        <p>
+          A new type of computer for everything that you love to do.&nbsp;<span class="hero__videoLink" ng-click="videoCtrl.open()">Watch</span>
+          <br>
+          <a
+            class="button--buyNow"
+            href="./find/"
+          >
+            Buy Now
+          </a>
+        </p>
+        <div class="hero__arrow" ng-click="onArrowClick()">
+        </div>
+      </div>
+    </div>
+
+  <div class="cards">
+<a href="//chrome.blogspot.com/2015/11/chrome-os-is-here-to-stay.html" target="_blank"><div class="card--homepage">
+        <div class="card__image" style="background-image:url(/chromebook/static/images/homepage-latest.jpg)" fadein></div>
+        <div class="card__content">
+          <h2>Latest News</h2>
+            <p>Find out more about our latest devices</p>
+          <div class="button--light">Find out more</div>
+        </div>
+      </div></a><a href="./about/"><div class="card--homepage">
+        <div class="card__image" style="background-image:url(/chromebook/static/images/homepage-about.jpg)" fadein></div>
+        <div class="card__content">
+          <h2>About Chromebooks</h2>
+          <div class="button--light">See Features</div>
+        </div>
+      </div></a><a href="./find/"><div class="card--homepage">
+        <div class="card__image" style="background-image:url(/chromebook/static/images/homepage-find.jpg)" fadein></div>
+        <div class="card__content">
+          <h2>Find your Chromebook</h2>
+          <div class="button--light">See Devices</div>
+        </div>
+      </div></a><a href="./switch/"><div class="card--homepage">
+        <div class="card__image" style="background-image:url(/chromebook/static/images/homepage-switch.jpg)" fadein></div>
+        <div class="card__content">
+          <h2>Make the switch</h2>
+          <div class="button--light">See How</div>
+        </div>
+      </div></a><a href="//www.google.com/intl/en_in/edu/products/devices/" target="_blank"><div class="card--homepage">
+        <div class="card__image" style="background-image:url(/chromebook/static/images/homepage-education.png)" fadein></div>
+        <div class="card__content">
+          <h2>For education</h2>
+          <div class="button--light">Find out more</div>
+        </div>
+      </div></a><a href="//www.google.com/work/chrome/" target="_blank"><div class="card--homepage">
+        <div class="card__image" style="background-image:url(/chromebook/static/images/homepage-business.jpg)" fadein></div>
+        <div class="card__content">
+          <h2>For work</h2>
+          <div class="button--light">Find out more</div>
+        </div>
+      </div></a>  </div>
+
+
+<div class="newsletter" ng-controller="EmailController" ng-init="form.country = 'IN'">
+  <h2>Get the latest Chromebook news</h2>
+  <form >
+    <input name="email" type="email" placeholder="Your Email" required ng-model="form.emailaddress" ng-class="{'is-error': error}" ng-keyup="validate()" />
+    <span>Please enter a valid email.</span>
+    <div class="email__checkbox">
+      <input name="send-me-news" type="checkbox" ng-model="form['send-me-news']" ng-change="validate()" id="send-me-news">
+      <label for="send-me-news">
+        Please send me the latest news, announcements, offers, and other updates about Chromebooks. You may opt out of receiving emails at any time.
+      </label>
+    </div>
+    <a class="button" ng-click="submitForm($event)" ng-class="{'is-disabled': !validated}">Join</a>
+    <div class="email__success" ng-class="{'is-active': success}">
+      <div class="email__successCheckmark"></div>
+      <p>Thank you for subscribing.</p>
+    </div>
+  </form>
+</div>
+  <div class="videoOverlay">
+    <div class="videoOverlay__content">
+      <iframe id="videoOverlay__player" src="https://www.youtube.com/embed/lHjNxscOY_M?modestbranding=1&amp;controls=0&amp;showinfo=0&amp;iv_load_policy=3&amp;rel=0&amp;enablejsapi=1" allowfullscreen></iframe>
+      <div class="videoOverlay__closeButton" ng-click="videoCtrl.close()"></div>
+    </div>
+  </div>
+</div>
+  </main>
+<footer>
+  <div class="footer__chromeLinks">
+    <div class="footer__chromeLinksColumn">
+      <h5>Chrome Family</h5>
+      <ul>
+        <li><a href="https://www.google.co.in/intl/en/chrome/browser/desktop/">Browser</a></li>
+        <li><a href="/intl/en_in/chromebook/find/">Devices</a></li>
+        <li><a href="https://www.google.co.in/intl/en/chrome/devices/chromecast/">Chromecast</a></li>
+        <li><a href="https://www.google.co.in/intl/en/chrome/webstore/">Web store</a></li>
+      </ul>
+    </div>
+    <div class="footer__chromeLinksColumn">
+      <h5>Business</h5>
+      <ul>
+        <li><a href="//www.google.com/chrome/business/browser/">Browser</a></li>
+        <li><a href="//www.google.com/work/chrome/devices/index.html">Devices</a></li>
+        <li><a href="//www.google.com/chrome/business/webstore/">Web store</a></li>
+        <li><a href="https://www.google.com/intx/en_in/work/?utm_source=chromesite&amp;utm_medium=et">Google for Work</a></li>
+      </ul>
+    </div>
+    <div class="footer__chromeLinksColumn">
+      <h5>Education</h5>
+      <ul>
+        <li><a href="https://www.google.co.in/intl/en/chrome/education/browser/">Browser</a></li>
+        <li><a href="https://www.google.com/intl/en_in/edu/products/devices/">Devices</a></li>
+        <li><a href="https://chrome.google.com/webstore/category/app/8-education?hl=en&amp;gl=IN">Web store</a></li>
+      </ul>
+    </div>
+    <div class="footer__chromeLinksColumn">
+      <h5>Dev & Partners</h5>
+      <ul>
+        <li><a href="//www.chromium.org/">Chromium</a></li>
+        <li><a href="//www.chromium.org/chromium-os">Chrome OS</a></li>
+        <li><a href="//developers.google.com/chrome/web-store/">Chrome web store</a></li>
+        <li><a href="//www.chromeexperiments.com/">Chrome Experiments</a></li>
+        <li><a href="//developers.google.com/">Google Code</a></li>
+      </ul>
+    </div>
+    <div class="footer__chromeLinksColumn">
+      <h5>Latest News</h5>
+      <ul>
+        <li><a href="//chrome.blogspot.com/">Chrome Blog</a></li>
+        <li><a href="//www.youtube.com/user/googlechrome">YouTube channel</a></li>
+        <li><a href="//plus.google.com/+Chrome/">Google+ page</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__googleLinks">
+    <span class="footer__googleLink"><a href="//www.google.com/about/">About Google</a></span>
+    <span class="footer__googleLink"><a href="//www.google.com/chrome/browser/privacy/">Chrome Privacy</a></span>
+    <span class="footer__googleLink"><a href="//support.google.com/chromebook/">Help</a></span>
+    <span class="footer__googleLink"><a href="//productforums.google.com/forum/#!forum/chromebook-central">Forum</a></span>
+    <div class="g-plusone" data-size="small"></div>
+    <a href="//plus.google.com/+Chrome">Add us on</a>
+    <a href="//plus.google.com/+Chrome?prsrc=3" rel="publisher" target="_top" style="text-decoration:none;">
+      <img src="//ssl.gstatic.com/images/icons/gplus-16.png" alt="Google+" class="footer__gplusLogo" style="border:0;width:16px;height:16px;"/>
+    </a>
+  </div>
+    <div class="footer__locale-switcher">
+      <select onchange="var href=this[this.selectedIndex].value;if(href!=''){window.location.href=href};">
+            <option value="/intl/cs_cz/chromebook/">
+              Česká republika - čeština
+            </option>
+            <option value="/intl/da_dk/chromebook/">
+              Danmark - dansk
+            </option>
+            <option value="/intl/de_be/chromebook/">
+              Belgien - Deutsch
+            </option>
+            <option value="/intl/de_ch/chromebook/">
+              Schweiz - Deutsch
+            </option>
+            <option value="/intl/de_de/chromebook/">
+              Deutschland - Deutsch
+            </option>
+            <option value="/intl/en_au/chromebook/">
+              Australia - English
+            </option>
+            <option value="/intl/en_ca/chromebook/">
+              Canada - English
+            </option>
+            <option value="/intl/en_uk/chromebook/">
+              United Kingdom - English
+            </option>
+            <option value="/intl/en_ie/chromebook/">
+              Ireland - English
+            </option>
+            <option value="/intl/en_in/chromebook/" selected>
+              India - English
+            </option>
+            <option value="/intl/en_my/chromebook/">
+              Malaysia - English
+            </option>
+            <option value="/intl/en_ph/chromebook/">
+              Philippines - English
+            </option>
+            <option value="/chromebook/">
+              United States - English
+            </option>
+            <option value="/intl/es_es/chromebook/">
+              España - español
+            </option>
+            <option value="/intl/es-419_mx/chromebook/">
+              México - español
+            </option>
+            <option value="/intl/fi_fi/chromebook/">
+              Suomi - suomi
+            </option>
+            <option value="/intl/fr_be/chromebook/">
+              Belgique - français
+            </option>
+            <option value="/intl/fr_ca/chromebook/">
+              Canada - français
+            </option>
+            <option value="/intl/fr_ch/chromebook/">
+              Suisse - français
+            </option>
+            <option value="/intl/fr_fr/chromebook/">
+              France - français
+            </option>
+            <option value="/intl/id_id/chromebook/">
+              Indonesia - Indonesia
+            </option>
+            <option value="/intl/ja_jp/chromebook/">
+              日本 - 日本語
+            </option>
+            <option value="/intl/ko_kr/chromebook/">
+              대한민국 - 한국어
+            </option>
+            <option value="/intl/no_no/chromebook/">
+              Norge - norsk bokmål
+            </option>
+            <option value="/intl/nl_be/chromebook/">
+              België - Nederlands
+            </option>
+            <option value="/intl/nl_nl/chromebook/">
+              Nederland - Nederlands
+            </option>
+            <option value="/intl/pl_pl/chromebook/">
+              Polska - polski
+            </option>
+            <option value="/intl/pt-BR_br/chromebook/">
+              Brasil - português
+            </option>
+            <option value="/intl/sv_se/chromebook/">
+              Sverige - svenska
+            </option>
+            <option value="/intl/th_th/chromebook/">
+              ไทย - ไทย
+            </option>
+            <option value="/intl/zh-HK_hk/chromebook/">
+              中華人民共和國香港特別行政區 - 中文
+            </option>
+            <option value="/intl/zh-TW_tw/chromebook/">
+              台灣 - 中文
+            </option>
+      </select>
+    </div>
+</footer>  <script src="//apis.google.com/js/platform.js" async defer></script>
+  <script>
+    chromebooks.main();
+  </script>

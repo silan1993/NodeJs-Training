@@ -17,15 +17,13 @@ router.get('/new', function(req, res, next) {
  
 });
 
-router.get('/:id/edit', function(req, res, next) {
+router.get('/:id', function(req, res, next) {
 	var id = req.params.id;
+
 	User.findById(id,function(err,data){
-
-		console.log(data);
-		console.log(err);
-
-		res.send('user-edit',{users:data});
+		res.status(200).send({users:data});
 	})
+
 
 });
 
@@ -41,24 +39,24 @@ router.post('/user-create', function(req, res, next) {
 
 
 
-router.post('/user-edit', function(req, res, next) {
+router.put('/user-edit', function(req, res, next) {
 	var id = req.body.userId;
 	User.findById(id,function(err ,data){
-
 		data.email = req.body.email;
 		data.mobile =req.body.mobile;
-		data.password =req.body.pwd;
-		data.save();
-		res.send('success');
+		data.password =req.body.password;
+		data.save().then(function(data1){
+			console.log(data1);
+			res.status(200).send({message:'success'});
+		});
 	})
 });
 
 
 router.get('/:id/delete', function(req, res, next) {
 	var id = req.params.id;
-
 	User.findByIdAndRemove(id,function(err,data){
-		res.send('success');
+		res.status(200).send({message:'success'});
 	})
 	
 });
