@@ -1,12 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/userModel');
-
+var jwt = require('jsonwebtoken');
 var Employee = require('../models/employeeModel');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-	User.find().then(function(data){
+	var token = req.query.token;
+	console.log(token);
+	var decoded = jwt.verify(token,'secrete');
+	console.log(decoded);
+	User.find({createdBy: decoded.user._id}).then(function(data){
 		res.send({ users: data });
 	})
  
@@ -30,7 +34,13 @@ router.get('/:id', function(req, res, next) {
 
 router.post('/user-create', function(req, res, next) {
 	var newUser  = new User(req.body);
-	console.log(newUser);
+
+	var token = req.query.token;
+
+	var decoded = jwt.verify(token,'secrete');
+
+	newUser.createdBy = decoded.user._id;
+
 	newUser.save().then(function(err,data){
 	res.status(200).send({message:'successful'})
 
@@ -39,7 +49,7 @@ router.post('/user-create', function(req, res, next) {
 
 
 
-router.put('/user-edit', function(req, res, next) {
+router.post('/user-edit', function(req, res, next) {
 	var id = req.body.userId;
 	User.findById(id,function(err ,data){
 		data.email = req.body.email;
