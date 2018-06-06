@@ -3,10 +3,17 @@ var express = require('express');
 var router = express.Router();
 var Client = require('node-rest-client').Client;
 var client = new Client();
+var localStorage = require('localStorage');
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-	var url = 'http://localhost:3000/users';
+	
+	var token = localStorage.getItem('token');
+
+	var url = 'http://localhost:3000/users?token='+token;
+	console.log(url);
+
 	var args = {'Content-Type':'application/json'}
 	 var req = client.get(url, args, function (data, response) {
 		res.render('users',{users:data.users});
@@ -43,8 +50,11 @@ router.post('/user-create', function(req, res, next) {
 		password:req.body.pwd,
 		address:req.body.address
 	}
-	var url = 'http://localhost:3000/users/user-create';
 
+	var token = localStorage.getItem('token');
+
+	var url = 'http://localhost:3000/users/user-create?token='+token;
+	console.log(url+' url==');
 	var args ={
 	 headers: {'Content-Type':'application/json'},
 	 data:newUser
