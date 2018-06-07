@@ -28,7 +28,12 @@ router.post('/', function(req, res, next) {
     var req = client.post(url, args, function (data, response) {
     	if(data.message =='success'){
     		localStorage.setItem('token' ,data.token);
-			res.redirect('/users')
+    		console.log('---'+req.oldUrl);
+    		if(req.oldUrl){
+    			res.redirect(req.oldUrl)
+    		}else{
+    			res.redirect('/users')
+    		}
 		}else{
 			res.render('error')
 		}
