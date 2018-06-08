@@ -1,6 +1,9 @@
 <h1>Users List</h1>
 <a href="/users/new"><button style="background-color: blue;color: white;text-align: right;height: 30px;" >Add User</button></a>
 <hr>
+{{> header}}
+
+{{> sidebar}}
 
 <table class="userTable" border="1px;" style="width: 100%">
 	<tr>
@@ -40,4 +43,6 @@
 		</td>
 	</tr>
 	{{/each }}
+
 </table>
+{{> footer }}

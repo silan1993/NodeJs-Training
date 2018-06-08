@@ -1,3 +1,5 @@
+{{> header}}
+{{> sidebar}}
 <p> Edit Your detail </p>
 
 <form action="/users/user-edit" method="put">
@@ -9,3 +11,5 @@
 	<input type="text" name="mobile" placeholder="mobile" value={{ users.mobile}}>
 	<button type="submit" value="submit">Update</button>
 </form>
+{{> footer}}
+
